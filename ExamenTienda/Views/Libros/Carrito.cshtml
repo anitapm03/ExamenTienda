@@ -1,9 +1,16 @@
 ﻿@model List<Libro>
 
-<a>Finalizar compra</a>
+@{
+    int idUsuario = int.Parse(Context.User.FindFirst("IdUsuario").Value);
+}
 
 @if (Model != null)
 {
+    <a asp-controller="Libros" asp-action="FinalizarCompra"
+    class="btn btn-outline-success" asp-route-idUsuario="@idUsuario">
+        Finalizar compra
+    </a>
+
     <table class="table table-hover">
         <thead>
             <tr>

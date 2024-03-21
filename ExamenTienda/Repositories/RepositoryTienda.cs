@@ -1,9 +1,22 @@
 ﻿using ExamenTienda.Data;
 using ExamenTienda.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExamenTienda.Repositories
 {
+    #region PROCEDURES
+    /*CREATE PROCEDURE SP_INSERTAR_PEDIDO
+(@FACTURA INT,
+@IDLIBRO INT,
+@IDUSUARIO INT,
+@FECHA DATE)
+AS
+	DECLARE @ID INT
+	SELECT @ID = MAX(IDPEDIDO) + 1 FROM PEDIDOS
+	INSERT INTO PEDIDOS VALUES (@ID, @FACTURA, @FECHA, @IDLIBRO, @IDUSUARIO, 1)
+GO*/
+    #endregion
     public class RepositoryTienda
     {
         private TiendaContext context;
@@ -65,6 +78,12 @@ namespace ExamenTienda.Repositories
             return consulta.ToList();
         }
 
+        public int GetNumFactura()
+        {
+            int maxFactura = context.Pedidos.Max(p => p.IdFactura);
+            return maxFactura + 1;
+        }
+
         public List<Usuario> GetUsuarios()
         {
             var consulta = from datos in context.Usuarios
@@ -95,6 +114,17 @@ namespace ExamenTienda.Repositories
             return consulta.ToList();
         }
 
+        public void InsertarPedido(int factura, int idlibro, int idusuario)
+        {
+            string sql = "SP_INSERTAR_PEDIDO @FACTURA, @IDLIBRO, @IDUSUARIO, @FECHA";
+            SqlParameter pfac = new SqlParameter("@FACTURA", factura);
+            SqlParameter plib = new SqlParameter("@IDLIBRO", idlibro);
+            SqlParameter pusu = new SqlParameter("@IDUSUARIO", idusuario);
+            SqlParameter pfe = new SqlParameter("@FECHA", DateTime.Now);
+
+            this.context.Database.ExecuteSqlRaw(sql, pfac, plib, pusu, pfe);
+
+        }
 
         /*LOGIN */
         public async Task<Usuario> LogInUsuarioAsync

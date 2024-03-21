@@ -104,5 +104,21 @@ namespace ExamenTienda.Controllers
                 this.repo.GetVistaPedidosUsuario(idUsuario);
             return View(pedidos);
         }
+
+        [AuthorizeUsuarios]
+        public IActionResult FinalizarCompra(int idUsuario)
+        {
+            List<int> ids =
+                HttpContext.Session.GetObject<List<int>>("CARRITO");
+
+            int idfactura = this.repo.GetNumFactura();
+
+            foreach(int id in ids)
+            {
+                this.repo.InsertarPedido(idfactura, id, idUsuario);
+            }
+            HttpContext.Session.Remove("CARRITO");
+            return RedirectToAction("MisPedidos");
+        }
     }
 }
