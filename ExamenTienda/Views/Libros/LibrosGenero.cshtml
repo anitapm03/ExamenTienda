@@ -1,0 +1,26 @@
+﻿@model List<Libro>
+
+<h1>Nuestros libros:</h1>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Titulo</th>
+            <th>Autor</th>
+            <th>Portada</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Libro lib in Model)
+        {
+            <tr>
+                <td>@lib.Titulo</td>
+                <td>@lib.Autor</td>
+                <td>
+                    <img src="~/images/@lib.Portada"
+                         style="width:100px; height:150px;" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
