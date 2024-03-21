@@ -27,6 +27,14 @@ namespace ExamenTienda.Repositories
             return consulta.ToList();
         }
 
+        public Libro FindLibro(int id)
+        {
+            var consulta = from datos in context.Libros
+                           where datos.IdLibro == id
+                           select datos;
+            return consulta.FirstOrDefault();
+        }
+
         public async Task<List<Libro>> GetLibrosGenero(int idGenero)
         {
             var consulta =from datos in context.Libros

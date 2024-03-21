@@ -21,6 +21,12 @@
                     <img src="~/images/@lib.Portada"
                     style="width:100px; height:150px;"/>
                 </td>
+                <td>
+                    <a asp-controller="Libros" asp-action="DetalleLibro"
+                    asp-route-id="@lib.IdLibro" class="btn btn-outline-info">
+                        Detalles
+                    </a>
+                </td>
             </tr>
         }
     </tbody>

@@ -28,12 +28,29 @@ namespace ExamenTienda.Controllers
         }
 
 
+        public IActionResult DetalleLibro(int id)
+        {
+            Libro libro = this.repo.FindLibro(id);
+            return View(libro);
+        }
+
         /*COSAS DEL USER*/
         [AuthorizeUsuarios]
         public IActionResult PerfilUsuario(/*int id*/)
         {
             //Usuario user = this.repo.FindUser(id);
             return View(/*user*/);
+        }
+        [AuthorizeUsuarios]
+        public IActionResult Carrito()
+        {
+            return View();
+        }
+
+        [AuthorizeUsuarios]
+        public IActionResult MisPedidos()
+        {
+            return View();
         }
     }
 }

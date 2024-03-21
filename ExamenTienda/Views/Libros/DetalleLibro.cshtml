@@ -1,0 +1,18 @@
+﻿@model Libro
+
+<h1>Detalles Libro</h1>
+
+<img src="~/images/@Model.Portada"
+style="width:100px;height:150px;" />
+
+<h1>@Model.Titulo</h1>
+<h2>@Model.Autor</h2>
+<h2>Editorial: @Model.Editorial</h2>
+<h4>Precio: @Model.Precio €</h4>
+
+<p><strong>Sinopsis:</strong></p>
+<p>@Model.Resumen</p>
+
+<button class="btn btn-outline-success">
+    Comprar!
+</button>
