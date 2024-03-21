@@ -75,11 +75,11 @@ namespace ExamenTienda.Repositories
 
         /*LOGIN Y LOGOUT*/
         public async Task<Usuario> LogInUsuarioAsync
-            (string nombre, string passw)
+            (string email, string passw)
         {
             Usuario user = 
                 await this.context.Usuarios
-                .Where(z => z.Nombre == nombre
+                .Where(z => z.Email == email
                 && z.Pass ==  passw).FirstOrDefaultAsync();
             return user;
         }

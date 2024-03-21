@@ -22,11 +22,11 @@ namespace ExamenTienda.Controllers
         }
         [HttpPost]
         public async Task<IActionResult> Login
-            (string username, string password)
+            (string email, string password)
         {
             //string passw = password;
             Usuario user = await
-                this.repo.LogInUsuarioAsync(username, password);
+                this.repo.LogInUsuarioAsync(email, password);
             if (user != null)
             {
                 ClaimsIdentity identity =
