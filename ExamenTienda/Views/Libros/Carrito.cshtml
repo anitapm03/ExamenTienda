@@ -1,7 +1,46 @@
-﻿
+﻿@model List<Libro>
 
 <a>Finalizar compra</a>
 
+@if (Model != null)
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Titulo</th>
+                <th>Autor</th>
+                <th>Portada</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Libro lib in Model)
+            {
+                <tr>
+                    <td>@lib.Titulo</td>
+                    <td>@lib.Autor</td>
+                    <td>
+                        <img src="~/images/@lib.Portada"
+                             style="width:100px; height:150px;" />
+                    </td>
+                    <td>@lib.Precio</td>
+                    <td>
+                        <a asp-controller="Libros"
+                        asp-action="Carrito"
+                        asp-route-ideliminar="@lib.IdLibro"
+                            class="btn btn-danger">
+                            Quitar del carrito
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h1>@ViewData["MSG"]</h1>
+}
 @*<table class="table table-hover">
     <thead>
         <tr>

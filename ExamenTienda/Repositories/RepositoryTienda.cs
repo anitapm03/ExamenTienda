@@ -35,6 +35,21 @@ namespace ExamenTienda.Repositories
             return consulta.FirstOrDefault();
         }
 
+        public async Task<List<Libro>> 
+            GetLibrosSessionAsync(List<int> ids)
+        {
+            var consulta = from datos in this.context.Libros
+                           where ids.Contains(datos.IdLibro)
+                           select datos;
+            if(consulta.Count() == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return await consulta.ToListAsync();
+            }
+        }
         public async Task<List<Libro>> GetLibrosGenero(int idGenero)
         {
             var consulta =from datos in context.Libros
@@ -81,7 +96,7 @@ namespace ExamenTienda.Repositories
         }
 
 
-        /*LOGIN Y LOGOUT*/
+        /*LOGIN */
         public async Task<Usuario> LogInUsuarioAsync
             (string email, string passw)
         {

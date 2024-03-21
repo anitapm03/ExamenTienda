@@ -1,4 +1,5 @@
-﻿using ExamenTienda.Filters;
+﻿using ExamenTienda.Extensions;
+using ExamenTienda.Filters;
 using ExamenTienda.Models;
 using ExamenTienda.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -28,9 +29,30 @@ namespace ExamenTienda.Controllers
         }
 
 
-        public IActionResult DetalleLibro(int id)
+        public IActionResult DetalleLibro(int id, int? idComprar)
         {
+
             Libro libro = this.repo.FindLibro(id);
+
+            if (idComprar != null)
+            {
+                List<int> carritoList;
+
+                if (HttpContext.Session.GetString("CARRITO") != null)
+                {
+                    carritoList =
+                        HttpContext.Session.GetObject<List<int>>("CARRITO");
+                }
+                else
+                {
+                    carritoList = new List<int>();
+                }
+                carritoList.Add(idComprar.Value);
+
+                HttpContext.Session.SetObject("CARRITO", carritoList);
+                ViewData["MSG"] = "Añadido al carrito!";
+            }
+
             return View(libro);
         }
 
@@ -41,16 +63,46 @@ namespace ExamenTienda.Controllers
             //Usuario user = this.repo.FindUser(id);
             return View(/*user*/);
         }
+
         [AuthorizeUsuarios]
-        public IActionResult Carrito()
+        public async Task<IActionResult> Carrito(int? ideliminar)
         {
-            return View();
+            List<int> ids =
+                HttpContext.Session.GetObject<List<int>>("CARRITO");
+
+            if (ids != null)
+            {
+                if (ideliminar != null)
+                {
+                    ids.Remove(ideliminar.Value);
+                    if(ids.Count() == 0)
+                    {
+                        HttpContext.Session.Remove("CARRITO");
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetObject("CARRITO", ids);
+                    }
+                }
+
+                List<Libro> libros = await
+                    this.repo.GetLibrosSessionAsync(ids);
+                return View(libros);
+            }
+            else
+            {
+                ViewData["MSG"] = "No hay artículos seleccionados";
+                return View();
+            }
+            
         }
 
         [AuthorizeUsuarios]
-        public IActionResult MisPedidos()
+        public IActionResult MisPedidos(int idUsuario)
         {
-            return View();
+            List<VistaPedido> pedidos =
+                this.repo.GetVistaPedidosUsuario(idUsuario);
+            return View(pedidos);
         }
     }
 }

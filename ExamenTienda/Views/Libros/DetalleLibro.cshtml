@@ -13,6 +13,21 @@ style="width:100px;height:150px;" />
 <p><strong>Sinopsis:</strong></p>
 <p>@Model.Resumen</p>
 
-<button class="btn btn-outline-success">
-    Comprar!
-</button>
+@if (Context.User.Identity.IsAuthenticated == false)
+{
+    <a asp-controller="Managed" asp-action="Login"
+       class="btn btn-outline-success">
+        Comprar!
+    </a>
+}
+else
+{
+    <a asp-controller="Libros" asp-action="DetalleLibro"
+       asp-route-idComprar="@Model.IdLibro"
+       class="btn btn-outline-success">
+        Comprar!
+    </a>
+}
+
+
+<h2 style="color:green">@ViewData["MSG"]</h2>

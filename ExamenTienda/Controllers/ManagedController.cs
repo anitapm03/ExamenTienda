@@ -42,6 +42,10 @@ namespace ExamenTienda.Controllers
                     new Claim(ClaimTypes.NameIdentifier, user.IdUsuario.ToString());
                 identity.AddClaim(claimId);
 
+                Claim claimIdUser =
+                    new Claim("IdUsuario", user.IdUsuario.ToString());
+                identity.AddClaim(claimIdUser);
+
                 Claim claimEmail =
                     new Claim("Email", user.Email);
                 identity.AddClaim(claimEmail);

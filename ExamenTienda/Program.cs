@@ -25,6 +25,9 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddControllersWithViews
     (options => options.EnableEndpointRouting = false);
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -39,6 +42,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
