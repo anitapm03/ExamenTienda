@@ -23,9 +23,7 @@
                             <a class="nav-link text-dark" asp-controller="Libros" asp-action="Index">Libros</a>
                         </li>
                         @await Component.InvokeAsync("MenuGeneros")
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        <partial name="_MenuUsuario"/>
                     </ul>
                 </div>
             </div>

@@ -1,5 +1,7 @@
-﻿using ExamenTienda.Models;
+﻿using ExamenTienda.Filters;
+using ExamenTienda.Models;
 using ExamenTienda.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExamenTienda.Controllers
@@ -25,5 +27,13 @@ namespace ExamenTienda.Controllers
             return View(libros);
         }
 
+
+        /*COSAS DEL USER*/
+        [AuthorizeUsuarios]
+        public IActionResult PerfilUsuario(/*int id*/)
+        {
+            //Usuario user = this.repo.FindUser(id);
+            return View(/*user*/);
+        }
     }
 }

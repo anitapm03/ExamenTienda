@@ -1,5 +1,6 @@
 ﻿using ExamenTienda.Data;
 using ExamenTienda.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExamenTienda.Repositories
 {
@@ -48,6 +49,14 @@ namespace ExamenTienda.Repositories
             return consulta.ToList();
         }
 
+        public Usuario FindUser(int id)
+        {
+            var consulta = from datos in context.Usuarios
+                           where datos.IdUsuario == id
+                           select datos;
+            return consulta.FirstOrDefault();
+        }
+
         public List<VistaPedido> GetVistaPedidos()
         {
             var consulta = from datos in context.VistasPedidos
@@ -62,5 +71,18 @@ namespace ExamenTienda.Repositories
                            select datos;
             return consulta.ToList();
         }
+
+
+        /*LOGIN Y LOGOUT*/
+        public async Task<Usuario> LogInUsuarioAsync
+            (string nombre, string passw)
+        {
+            Usuario user = 
+                await this.context.Usuarios
+                .Where(z => z.Nombre == nombre
+                && z.Pass ==  passw).FirstOrDefaultAsync();
+            return user;
+        }
+
     }
 }

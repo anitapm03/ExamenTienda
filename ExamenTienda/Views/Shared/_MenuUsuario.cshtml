@@ -1,0 +1,36 @@
+﻿
+
+@if (Context.User.Identity.IsAuthenticated == false)
+{
+    <li class="nav-item">
+        <a asp-controller="Libros"
+           asp-action="PerfilUsuario"
+           class="nav-link">
+            Log In
+        </a>
+    </li>
+}
+else
+{
+    <li class="nav-item">
+        <a asp-controller="Managed"
+           asp-action="Logout"
+           class="nav-link">
+            Cerrar sesión
+        </a>
+    </li>
+    <li class="nav-item">
+
+        @{
+            string foto = Context.User.FindFirst("Foto").ToString();
+        }
+        <a asp-controller="Libros"
+           asp-action="PerfilUsuario"
+           class="nav-link">
+            <img src="~/images/@foto" 
+            style="width:30px;height:30px;border-radius: 100" />
+
+            Hola @Context.User.Identity.Name!
+        </a>
+    </li>
+}
