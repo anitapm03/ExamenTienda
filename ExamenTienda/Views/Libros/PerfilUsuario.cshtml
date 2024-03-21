@@ -1,7 +1,7 @@
 ﻿@using System.Security.Claims
 
 @{
-    string foto = Context.User.FindFirst("Foto").ToString();
+    string foto = Context.User.FindFirst("Foto").Value;
 }
 <img src="~/images/@foto" 
 style="width:150px;height:150px;" />

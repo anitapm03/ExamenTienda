@@ -98,8 +98,9 @@ namespace ExamenTienda.Controllers
         }
 
         [AuthorizeUsuarios]
-        public IActionResult MisPedidos(int idUsuario)
+        public IActionResult MisPedidos(/*int idUsuario*/)
         {
+            int idUsuario = int.Parse(HttpContext.User.FindFirst("IdUsuario").Value);
             List<VistaPedido> pedidos =
                 this.repo.GetVistaPedidosUsuario(idUsuario);
             return View(pedidos);

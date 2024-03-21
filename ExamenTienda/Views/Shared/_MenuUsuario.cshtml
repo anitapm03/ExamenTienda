@@ -22,7 +22,7 @@ else
     <li class="nav-item">
 
         @{
-            string foto = Context.User.FindFirst("Foto").ToString();
+            string foto = Context.User.FindFirst("Foto").Value;
             int idUsuario = int.Parse(Context.User.FindFirst("IdUsuario").Value);
         }
         <a asp-controller="Libros"
@@ -44,12 +44,20 @@ else
     <li class="nav-item">
         <a asp-controller="Libros"
            asp-action="MisPedidos"
-           asp-route-idUsuario="@idUsuario"
+           
            class="nav-link">
             Mis pedidos 
         </a>
     </li>
     <li class="nav-link">
-        Libros: 
+        @{
+            List<int> ids = Context.Session.GetObject<List<int>>("CARRITO");
+        }
+        Libros:
+        @if (ids != null)
+        {
+            @ids.Count
+        }
+        
     </li>
 }
